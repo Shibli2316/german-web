@@ -32,15 +32,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get words and sentences from the form
     $words = $_POST['word'];
     $sentences = $_POST['sentence'];
+    $meaning = $_POST['meaning'];
 
     // Prepare the SQL query to insert data into the database
-    $sql = "INSERT INTO word (bakchod, dateNow, w1, s1, w2, s2, w3, s3, w4, s4, w5, s5) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO word (bakchod, dateNow, w1, s1, w2, s2, w3, s3, w4, s4, w5, s5, m1, m2, m3, m4, m5) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     // Prepare and bind the SQL statement
     if ($stmt = $conn->prepare($sql)) {
         $stmt->bind_param(
-            "ssssssssssss", 
+            "sssssssssssssssss",
             $username,  // bakchod
             $dateNow,   // dateNow
             $words[0],  // w1
@@ -52,7 +53,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $words[3],  // w4
             $sentences[3], // s4
             $words[4],  // w5
-            $sentences[4] // s5
+            $sentences[4], // s5
+            $meaning[0],
+            $meaning[1],
+            $meaning[2],
+            $meaning[3],
+            $meaning[4]
         );
 
         // Execute the query
@@ -79,14 +85,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Language Learning Form - Step 2</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-gray-100 flex justify-center items-center min-h-screen">
-<?php if (isset($message)): ?>
+
+
+    <?php require_once('header.php') ?>
+    <?php if (isset($message)): ?>
         <!-- Modal -->
         <div id="popupModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
             <div class="bg-white p-8 rounded-lg shadow-lg text-center">
@@ -94,7 +105,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?= $messageType === 'success' ? 'Success!' : 'Error!' ?>
                 </h3>
                 <p class="mb-4 text-gray-700"><?= htmlspecialchars($message) ?></p>
-                <button onclick="closeModalAndRedirect()" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+                <button onclick="closeModalAndRedirect()"
+                    class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
                     Close
                 </button>
             </div>
@@ -112,10 +124,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             setTimeout(closeModalAndRedirect, 3000);
         </script>
     <?php endif; ?>
-    <div class="bg-white p-8 rounded-lg shadow-lg w-96">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-96 mt-20">
         <form action="word.php" method="POST">
-            <h2 class="text-2xl font-semibold mb-4 text-center">Word and Sentence Input</h2>
-            
+            <h2 class="text-2xl font-semibold mb-4 text-center">Add your words</h2>
+
             <!-- Hidden Fields to Carry Data from Step 1 -->
             <input type="hidden" name="date" value="<?php echo $date; ?>">
             <input type="hidden" name="name" value="<?php echo $name; ?>">
@@ -124,12 +136,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div id="word-section" class="space-y-4">
                 <?php for ($i = 1; $i <= 5; $i++): ?>
                     <div class="mb-4">
-                        <label for="word-<?php echo $i; ?>" class="block text-sm font-medium text-gray-700">Word <?php echo $i; ?></label>
+                        <label for="word-<?php echo $i; ?>" class="block text-sm font-medium text-gray-700">Word
+                            <?php echo $i; ?></label>
                         <input type="text" id="word-<?php echo $i; ?>" name="word[]" required
                             class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md text-gray-700">
                     </div>
                     <div class="mb-4">
-                        <label for="sentence-<?php echo $i; ?>" class="block text-sm font-medium text-gray-700">Sentence <?php echo $i; ?></label>
+                        <label for="meaning-<?php echo $i; ?>" class="block text-sm font-medium text-gray-700">Meaning
+                            <?php echo $i; ?></label>
+                        <input type="text" id="meaning-<?php echo $i; ?>" name="meaning[]" required
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md text-gray-700">
+                    </div>
+                    <div class="mb-4">
+                        <label for="sentence-<?php echo $i; ?>" class="block text-sm font-medium text-gray-700">Sentence
+                            <?php echo $i; ?></label>
                         <input type="text" id="sentence-<?php echo $i; ?>" name="sentence[]" required
                             class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md text-gray-700">
                     </div>
@@ -142,5 +162,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </button>
         </form>
     </div>
+
 </body>
+
 </html>

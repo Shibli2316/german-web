@@ -4,8 +4,11 @@ require_once('db_connect.php');
 require('fpdf.php'); // Include FPDF library
 
 // Check if user is logged in
+
+
 if (!isset($_SESSION['email'])) {
-    die("User not logged in.");
+    header('location: authenticate.php');
+    die('User not logged in');
 }
 
 // Fetch all words, meanings, and sentences

@@ -2,9 +2,10 @@
 session_start();
 require_once('db_connect.php'); // Include your DB connection
 
-// Check if user is logged in
+
 if (!isset($_SESSION['email'])) {
-    die("User not logged in.");
+    header('location: authenticate.php');
+    die('User not logged in');
 }
 
 $username = $_SESSION['email'];

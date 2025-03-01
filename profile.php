@@ -3,9 +3,10 @@ session_start();
 require_once('header.php');
 require_once('db_connect.php'); // Assuming this file contains the database connection
 
-// Check if user is logged in
+
 if (!isset($_SESSION['email'])) {
-    die("User not logged in.");
+    header('location: authenticate.php');
+    die('User not logged in');
 }
 
 // Get the logged-in email

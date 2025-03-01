@@ -4,6 +4,7 @@ include('db_connect.php'); // Ensure you have your database connection here
 // Check if user is logged in, and if email is available in session
 session_start();
 if (!isset($_SESSION['email'])) {
+    header('location: authenticate.php');
     die('User not logged in');
 }
 

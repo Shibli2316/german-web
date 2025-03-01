@@ -2,9 +2,9 @@
 session_start();
 require_once('db_connect.php');
 
-// Check if user is logged in
 if (!isset($_SESSION['email'])) {
-    die("User not logged in.");
+    header('location: authenticate.php');
+    die('User not logged in');
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

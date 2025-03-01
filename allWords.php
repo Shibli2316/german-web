@@ -1,7 +1,11 @@
 <?php 
 // Database connection
 include "db_connect.php";
-
+session_start();
+if (!isset($_SESSION['email'])) {
+    header('location: authenticate.php');
+    die('User not logged in');
+}
 // Fetch words from the database
 $sql = "SELECT * FROM word ORDER BY dateNow DESC";
 $result = $conn->query($sql);

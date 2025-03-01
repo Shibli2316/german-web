@@ -123,7 +123,7 @@ $conn->close();
                 </div>
             </div>
             <!-- About Section -->
-            <div class="col-span-1 sm:col-span-9">
+            <div class="col-span-1 sm:col-span-9 ">
                 <div class="card p-6">
                     <h2 class="text-2xl font-semibold text-gray-800 mb-4">My German Personality</h2>
                     <p class="text-gray-600 text-base leading-relaxed">
@@ -132,7 +132,7 @@ $conn->close();
                 </div>
 
                 <!-- Daily Learning Table Section -->
-                <div class="col-span-1 sm:col-span-9">
+                <div class="col-span-1 sm:col-span-9 mt-6">
                     <div class="card p-8">
                         <h1 class="text-3xl font-semibold text-center text-blue-600 mb-6">Words Contributed</h1>
 

@@ -87,7 +87,7 @@ function toggleHint() {
 <?php require_once('header.php') ?>
 
     <div class="bg-white p-8 rounded-lg shadow-md max-w-lg mx-auto mt-20">
-        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Select Words</h2>
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Take a test</h2>
 
         <form method="POST">
             <!-- Start Date -->

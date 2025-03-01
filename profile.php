@@ -12,7 +12,7 @@ if (!isset($_SESSION['email'])) {
 $username = $_SESSION['email'];
 
 $bakchodData = null;
-$sql_bakchod = "SELECT name, tag, quote FROM bakchod WHERE email = ?";
+$sql_bakchod = "SELECT name, tag, quote, image FROM bakchod WHERE email = ?";
 $stmt_bakchod = $conn->prepare($sql_bakchod);
 $stmt_bakchod->bind_param("s", $username);
 $stmt_bakchod->execute();
@@ -103,7 +103,7 @@ $conn->close();
             <div class="col-span-1 sm:col-span-3">
                 <div class="card p-6">
                     <div class="text-center">
-                        <img src="#" class="w-32 h-32 bg-gray-300 rounded-full mx-auto mb-4 shadow-lg">
+                        <img src="<?php echo $bakchodData['image']; ?>" class="w-32 h-32 bg-gray-300 rounded-full mx-auto mb-4 shadow-lg">
                         <h1 class="text-2xl font-semibold text-gray-800">
                             <?php echo htmlspecialchars($bakchodData['name'] ?? 'Unknown'); ?>
                         </h1>
@@ -113,6 +113,8 @@ $conn->close();
                         <div class="mt-6 flex justify-center gap-4">
                             <a href="editProfile.php"
                                 class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg shadow-md transition duration-300">Edit</a>
+                            <a href="addPhoto.php"
+                                class="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg shadow-md transition duration-300">Add Photo</a>
                         </div>
                     </div>
                     <hr class="my-6 border-t border-gray-200">
